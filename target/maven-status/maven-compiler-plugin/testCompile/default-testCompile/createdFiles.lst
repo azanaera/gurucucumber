@@ -1,0 +1,3 @@
+step_definitions\isFriday.class
+step_definitions\Guru.class
+main\RunCucumberTest.class
