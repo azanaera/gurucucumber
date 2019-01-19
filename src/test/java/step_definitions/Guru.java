@@ -1,6 +1,7 @@
 package step_definitions;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
@@ -28,7 +29,7 @@ public class Guru {
     }
 
     @When("I fill in username with {string} and password with {string}")
-    public void iFillInUsernameWithUserAndPasswordWithPass(String string, String string2) throws Throwable {
+    public void iFillInUsernameWithUserAndPasswordWithPass(String string, String string2) throws Exception {
 ////        XPATH
 //        driver.findElement(By.xpath("//input[@name='uid']")).sendKeys(string);
 //        driver.findElement(By.xpath("//input[@name='uid']")).sendKeys(string);
@@ -37,11 +38,29 @@ public class Guru {
         driver.findElement(By.name("uid")).sendKeys(string);
         driver.findElement(By.name("password")).sendKeys(string2);
         driver.findElement(By.name("btnLogin")).click();
+
+
+        //// if true = mag ffail tong @When
+        //// tas skip @Then
+        ////        else proceed sa @Then
+        boolean isAlert = isAlertPresents();
+        System.out.println(isAlert);
+        assertNotEquals(true,isAlert);
     }
 
     @Then("^I should see the HomePage$")
     public void iShouldSeeTheHomePage() throws Throwable {
         //al baguhin mo dito
         driver.findElement(By.xpath("/html/body/div[3]/div/ul/li[2]/a")).click();
+    }
+
+    public boolean isAlertPresents() {
+        try {
+            driver.switchTo().alert();
+            return true;
+        }// try
+        catch (Exception e) {
+            return false;
+        }// catch
     }
 }
